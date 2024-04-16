@@ -1,10 +1,13 @@
-import css from './ContactForm.module.css';
 import { useId } from 'react';
-import { Formik, Form, useField } from 'formik';
-import { nanoid } from 'nanoid';
-import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
+import { addContact } from '../../redux/contactsSlice';
+
 import { FaArrowRight } from 'react-icons/fa';
+import { nanoid } from 'nanoid';
+import { Formik, Form, useField } from 'formik';
+import * as Yup from 'yup';
 import clsx from 'clsx';
+import css from './ContactForm.module.css';
 
 const MyInput = ({ label, ...props }) => {
   const [field, meta] = useField(props);
@@ -25,7 +28,8 @@ const MyInput = ({ label, ...props }) => {
   );
 };
 
-const ContactForm = ({ addingContact }) => {
+const ContactForm = () => {
+  const dispatch = useDispatch();
   const formId = {
     name: useId(),
     number: useId(),
@@ -33,8 +37,8 @@ const ContactForm = ({ addingContact }) => {
 
   const handleSubmit = (values, actions) => {
     actions.resetForm();
-    values.id = nanoid();
-    addingContact(values);
+    const contact = { name: values.name, number: values.number, id: nanoid() };
+    dispatch(addContact(contact));
   };
 
   const FeedbackSchema = Yup.object().shape({
@@ -64,4 +68,5 @@ const ContactForm = ({ addingContact }) => {
     </Formik>
   );
 };
+
 export default ContactForm;

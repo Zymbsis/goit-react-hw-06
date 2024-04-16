@@ -1,13 +1,13 @@
-import css from './Contact.module.css';
+import { useDispatch } from 'react-redux';
+import { deleteContact } from '../../redux/contactsSlice';
+
 import { FaUser } from 'react-icons/fa';
 import { FaPhone } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
+import css from './Contact.module.css';
 
-const Contact = ({
-  contact: { id, name, number },
-  deletingContact,
-  setter,
-}) => {
+const Contact = ({ contact: { id, name, number } }) => {
+  const dispatch = useDispatch();
   return (
     <>
       <div className={css.contact}>
@@ -22,8 +22,7 @@ const Contact = ({
         className={css.button}
         type="button"
         onClick={() => {
-          deletingContact(id);
-          setter('');
+          dispatch(deleteContact(id));
         }}
       >
         <MdDeleteForever className={css.icon} />
