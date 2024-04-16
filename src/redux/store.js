@@ -14,7 +14,7 @@ import { contactsReducer } from './contactsSlice';
 import { filtersReducer } from './filtersSlice';
 
 const mailboxPersistConfig = {
-  key: 'mailbox',
+  key: 'contacts',
   storage,
   whitelist: ['items'],
 };
